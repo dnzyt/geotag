@@ -9,9 +9,11 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    
     @State var username: String = ""
     @State var password: String = ""
+
+    @EnvironmentObject var authentication: Authentication
+
     
     var body: some View {
         ZStack {
