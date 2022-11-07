@@ -9,67 +9,63 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @State var username: String = ""
-    @State var password: String = ""
 
     @EnvironmentObject var authentication: Authentication
 
+    @ObservedObject var loginVM = LoginVM()
     
     var body: some View {
         ZStack {
             Color.green
+            Text("v1.0.0")
+                .foregroundColor(.white)
+                .offset(x: UIScreen.screenWidth / 2 - 60, y: -UIScreen.screenHeight / 2 + 70)
             VStack {
                 Image("logo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 300)
-                    .padding(.bottom,40)
-                
+                    .padding(.bottom, 40)
+
                 VStack {
-                    TextField("Username",text: $username)
-                            .font(Font.system(size: 30))
-                            .foregroundColor(.gray)
-                            .frame(width: 300, height: 50)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            
+                    TextField("Username",text: $loginVM.username)
+                        .padding()
+                        .frame(width: 300, height: 40)
+                        .textFieldStyle(PlainTextFieldStyle())
+
                        Divider()
                         .frame(width: 296)
                         //.background(Color.white)
-                    
-                    TextField("Password", text: $password)
-                            .font(Font.system(size: 30))
-                            .foregroundColor(Color.black)
-                           // .background(Color.white)
-                            .frame(width: 300, height: 50)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
+
+                    TextField("Password", text: $loginVM.password)
+                        .padding()
+                        .frame(width: 300, height: 40)
+                        .textFieldStyle(PlainTextFieldStyle())
                 }
                 .background(.white)
                 .cornerRadius(5)
 
-               
-                                        
+
+
                 Button {
-                    
+                    loginVM.login { success in
+                        print("login result: \(success)")
+                        authentication.updateValidation(success: success)
+                    }
                 } label: {
                     Text("Login")
                         .foregroundColor(Color.white)
                         .frame(width: 300, height: 50)
                         .background(Color.blue)
-                        //.cornerRadius(20.0)
                         .padding(.top, 10)
                 }
 
-                
-                
-                
+
             }
             
-            Spacer()
             
         }
+        .edgesIgnoringSafeArea(.all)
     
         
     }

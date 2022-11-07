@@ -18,9 +18,15 @@ class LoginVM: ObservableObject {
     
     func login(completion: @escaping (Bool) -> Void) {
         showProgressView = true
-        LoginService.shared.login(username: username, password: password) { [unowned self] result in
-            showProgressView = false
-            completion(result)
+        print("username: \(username) - \(password)")
+
+        LoginService.shared.login(
+            username: username,
+            password: password) { [unowned self] result in
+                DispatchQueue.main.async {
+                    showProgressView = false
+                    completion(result)
+                }
         }
     }
 }
