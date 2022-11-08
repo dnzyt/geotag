@@ -19,9 +19,10 @@ struct geotagApp: App {
                 // HomeView
             } else {
                 // Login View
-                ContentView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(authentication)
+                HomeView()
+               // ContentView()
+               //     .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                //    .environmentObject(authentication)
             }
         }
     }
