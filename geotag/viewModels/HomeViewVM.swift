@@ -9,19 +9,14 @@ import Foundation
 import SwiftyJSON
 
 class HomeViewVM: ObservableObject {
-    @Published var informations = [Location]()
     @Published var clubID = ""
     @Published var memberID = ""
     
-    func searchInfo(completion: @escaping (Bool) -> Void) {
+    
+    func searchInfo(completion: @escaping (JSON?) -> Void) {
 
-        HomeService.shared.searchInfo(clubID: clubID, memberID: memberID)
-            { [unowned self] result in
-                DispatchQueue.main.async {
-                   // showProgressView = false
-                    
-                completion(result)
-                }
+        HomeService.shared.searchInfo(clubID: clubID, memberID: memberID) { json in
+           completion(json)
         }
     }
     

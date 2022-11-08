@@ -12,7 +12,7 @@ class HomeService {
     static let shared = HomeService()
     func searchInfo(clubID: String,
                memberID: String,
-            completion: @escaping (Bool) -> Void
+            completion: @escaping (JSON?) -> Void
     ) {
         var dict = [String: String]()
         dict["Distributorld"] = ""
@@ -35,9 +35,9 @@ class HomeService {
             let json = try! JSON(data: data!)
             print("json: \(json)")
             if let _ = json["errorMessage"].string {
-                completion(false)
+                completion(nil)
             } else {
-                completion(true)
+                completion(json)
             }
         }.resume()
     }

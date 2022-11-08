@@ -22,7 +22,6 @@
 		6AB8B24E291893CF00F6C1E3 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8B24D291893CF00F6C1E3 /* LoginVM.swift */; };
 		6AB8B2502918975000F6C1E3 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8B24F2918975000F6C1E3 /* Authentication.swift */; };
 		6AFAD69C291950B800678966 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD69B291950B800678966 /* HomeView.swift */; };
-		6AFAD6A02919A37C00678966 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD69F2919A37C00678966 /* Location.swift */; };
 		6AFAD6A22919A74300678966 /* HomeViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD6A12919A74300678966 /* HomeViewVM.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +41,6 @@
 		6AB8B24D291893CF00F6C1E3 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		6AB8B24F2918975000F6C1E3 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		6AFAD69B291950B800678966 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		6AFAD69F2919A37C00678966 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		6AFAD6A12919A74300678966 /* HomeViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				6A0636822919AA740003BA34 /* utils */,
-				6AFAD69E2919A32800678966 /* Data */,
 				6AFAD69D291950D500678966 /* View */,
 				6AB8B24C291893AF00F6C1E3 /* viewModels */,
 				6AB8B2492918930A00F6C1E3 /* extensions */,
@@ -143,14 +140,6 @@
 				6AFAD69B291950B800678966 /* HomeView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		6AFAD69E2919A32800678966 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				6AFAD69F2919A37C00678966 /* Location.swift */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,7 +221,6 @@
 				6AA17428291A6F7B00452050 /* HomeService.swift in Sources */,
 				6AFAD69C291950B800678966 /* HomeView.swift in Sources */,
 				6AB8B24E291893CF00F6C1E3 /* LoginVM.swift in Sources */,
-				6AFAD6A02919A37C00678966 /* Location.swift in Sources */,
 				6A36F1072917F793004D0C1B /* Persistence.swift in Sources */,
 				6AFAD6A22919A74300678966 /* HomeViewVM.swift in Sources */,
 				6A36F1002917F793004D0C1B /* ContentView.swift in Sources */,

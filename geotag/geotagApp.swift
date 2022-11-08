@@ -20,6 +20,7 @@ struct geotagApp: App {
             } else {
                 // Login View
                 HomeView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
                // ContentView()
                //     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 //    .environmentObject(authentication)

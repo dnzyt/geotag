@@ -6,36 +6,31 @@
 //
 
 import SwiftUI
+import CoreData
 
 
 struct HomeView: View {
-    
+    @State var clubKey: String = ""
+    @State var memberID: String = ""
     @State private var showingPopover: Bool = false
-    @State var showList: Bool = false
     @ObservedObject var vm = HomeViewVM()
+    @State var clubs: [Club] = []
+    
+    @Environment(\.managedObjectContext) var viewContext
     
 
     var body: some View {
        
         NavigationView {
             VStack {
-                if showList {
-                   // Text("true")
-//                    List(vm.informations) { information in
-//                        VStack {
-//                            HStack {
-//                                Text(information.clubKey)
-//                                Text(information.clubName)
-//                            }
-//                            Text(information.address)
-//                        }
-//                        
-//                    }
+                    List {
+                        ForEach(clubs) { club in
+                            Text(club.clubKey!)
+                        }
+                    }
                     
-                }
-                else {
-                    Text("false")
-                }
+                
+                
                 
             }
                 .navigationBarTitle("Nutrition club",displayMode: .inline)
@@ -47,7 +42,7 @@ struct HomeView: View {
                         Image(systemName: "doc.text.magnifyingglass")
                     }
                     .popover(isPresented: $showingPopover,arrowEdge: .bottom) {
-                        PopoverContent(showList: $showList)
+                        popoverContent
                         
                     }
                     
@@ -73,18 +68,24 @@ struct HomeView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(vm)
+        .onAppear {
+            do {
+                let request = NSFetchRequest<Club>(entityName: "Club")
+                let results = try viewContext.fetch(request)
+                for c in results {
+                    clubs.append(c)
+
+                }
+                
+            } catch {
+                print("fetch clubs failed.")
+            }
+            
+        }
         
     }
-}
-struct PopoverContent: View {
     
-    @State var clubKey: String = ""
-    @State var memberID: String = ""
-    @Binding var showList: Bool
-    @EnvironmentObject var vm: HomeViewVM
-    
-    
-    var body: some View {
+    var popoverContent: some View {
         VStack {
             TextField("Club Key",text: $clubKey)
                     .font(Font.system(size: 20))
@@ -106,10 +107,34 @@ struct PopoverContent: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
             
             Button {
-                showList.toggle()
                 
-                vm.searchInfo { result in
-                    print("search result: \(result)")
+                vm.searchInfo { json in
+                    guard let json = json else { return }
+                    let errorMessage =  json["ErrorMessage"].stringValue
+                    if errorMessage == "SUCCESS" {
+                        let cbs = json["GetClubDetails"].arrayValue
+                        for cb in cbs {
+                            let ck = cb["ClubKey"].stringValue
+                            let name = cb["ClubName"].stringValue
+                            let address = cb["Address"].stringValue
+                            
+                            viewContext.perform {
+                                let c = Club(entity: Club.entity(), insertInto: viewContext)
+                                c.clubName = name
+                                c.clubKey = ck
+                                c.addresss = address
+                                clubs.append(c)
+                                
+                                do {
+                                    try viewContext.save()
+                                    print("save successfully!")
+                                } catch {
+                                    print("save error")
+                                }
+                                
+                            }
+                        }
+                    }
                 }
                 
             } label: {
@@ -127,7 +152,10 @@ struct PopoverContent: View {
         .frame(width: 250, height: 200)
         .background(Color.white)
         .cornerRadius(5)
-
     }
 }
+
+
+
+
 
