@@ -33,7 +33,7 @@ struct HomeView: View {
     
     @State var annotationItems: [MyAnnotationItem] = [
        // MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: 37.78, longitude: -122.44)),
-        MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: -6.270598386958833, longitude: 106.53145176654043))
+      //  MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: -6.270598386958833, longitude: 106.53145176654043))
                 
     ]
     
@@ -149,8 +149,8 @@ struct HomeView: View {
                         arrayDouble = [-6.270598386958833, 106.53145176654043]
                     }
                     else {
-                        let longt = arrayDouble?[0]
-                        let lat = arrayDouble?[1]
+                        let lat = arrayDouble?[0]
+                        let longt = arrayDouble?[1]
                         annotationItems.append(MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat!), longitude: CLLocationDegrees(longt!))))
                         print("\(annotationItems)")
                     }
