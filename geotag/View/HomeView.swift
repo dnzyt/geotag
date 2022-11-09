@@ -7,6 +7,13 @@
 
 import SwiftUI
 import CoreData
+import MapKit
+
+struct MyAnnotationItem: Identifiable {
+    let id = UUID()
+    var coordinate: CLLocationCoordinate2D
+}
+
 
 
 struct HomeView: View {
@@ -15,6 +22,22 @@ struct HomeView: View {
     @State private var showingPopover: Bool = false
     @ObservedObject var vm = HomeViewVM()
     @State var clubs: [Club] = []
+    @State var coordinateRegion: MKCoordinateRegion = {
+        var newRegion = MKCoordinateRegion()
+        newRegion.center.latitude = -6.270598386958833
+        newRegion.center.longitude = 106.53145176654043
+        newRegion.span.latitudeDelta = 0.1
+        newRegion.span.longitudeDelta = 0.1
+        return newRegion
+    }()
+    
+    @State var annotationItems: [MyAnnotationItem] = [
+       // MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: 37.78, longitude: -122.44)),
+        MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: -6.270598386958833, longitude: 106.53145176654043))
+                
+    ]
+    
+    
     
     @Environment(\.managedObjectContext) var viewContext
     
@@ -23,15 +46,57 @@ struct HomeView: View {
        
         NavigationView {
             VStack {
-                    List {
-                        ForEach(clubs) { club in
-                            Text(club.clubKey!)
+
+            List(clubs) { club in
+                HStack {
+                    VStack {
+                        Image(systemName: "key")
+                            .padding(.top, 10)
+                        Spacer()
+                        Image(systemName: "house")
+                            .padding(.bottom,30)
+                    }
+                    VStack {
+                        Text("Club key")
+                            .frame(width: 250, alignment: .leading)
+                        Text(club.clubKey!)
+                            .frame(width: 250, alignment: .leading)
+                            .foregroundColor(.green)
+                        Text("Address")
+                            .frame(width: 250, alignment: .leading)
+                        Text(club.addresss!)
+                            .frame(width: 250)
+                            .foregroundColor(.green)
+                    }
+                    Spacer()
+                    VStack {
+                        Text("Club name")
+                        Text(club.clubName!)
+                            .foregroundColor(.green)
+                        Spacer()
+                        HStack {
+                            Image(systemName: "mappin.and.ellipse")
+                            Image(systemName: "map.circle")
+                                .frame(width: 20, alignment: .trailing)
+
                         }
                     }
-                    
+                }
+               
                 
                 
-                
+            }
+            
+               //Map(coordinateRegion: mapRegion)
+             //   ForEach(clubs, id: \.self) { club in
+               //     geoCode = club.geoCode?.components(separatedBy: ",") as! [Float]
+                 //   let lat = geoCode[0]
+                   // let lont = geoCode[1]
+               // }
+                Map(coordinateRegion: $coordinateRegion, annotationItems: annotationItems) { item in
+                    MapPin(coordinate: item.coordinate)
+                }
+
             }
                 .navigationBarTitle("Nutrition club",displayMode: .inline)
                 .navigationBarItems(trailing:
@@ -74,10 +139,31 @@ struct HomeView: View {
                 let results = try viewContext.fetch(request)
                 for c in results {
                     clubs.append(c)
-
+                        
+                   // print("\(c.geoCode)")
+                       
+                       
+                    let arrayString = c.geoCode?.split(separator: ",")
+                    var arrayDouble = arrayString?.compactMap(Double.init)
+                    if arrayDouble == nil {
+                        arrayDouble = [-6.270598386958833, 106.53145176654043]
+                    }
+                    else {
+                        let longt = arrayDouble?[0]
+                        let lat = arrayDouble?[1]
+                        annotationItems.append(MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat!), longitude: CLLocationDegrees(longt!))))
+                        print("\(annotationItems)")
+                    }
+                        
+                    
+                    
+                    
+                    
+                    
+                    
                 }
-                
-            } catch {
+            }
+                catch {
                 print("fetch clubs failed.")
             }
             
@@ -117,12 +203,14 @@ struct HomeView: View {
                             let ck = cb["ClubKey"].stringValue
                             let name = cb["ClubName"].stringValue
                             let address = cb["Address"].stringValue
+                            let geoCode = cb["GeoCode"].stringValue
                             
                             viewContext.perform {
                                 let c = Club(entity: Club.entity(), insertInto: viewContext)
                                 c.clubName = name
                                 c.clubKey = ck
                                 c.addresss = address
+                                c.geoCode = geoCode
                                 clubs.append(c)
                                 
                                 do {

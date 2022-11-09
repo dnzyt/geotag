@@ -4,5 +4,6 @@
         <attribute name="addresss" optional="YES" attributeType="String"/>
         <attribute name="clubKey" optional="YES" attributeType="String"/>
         <attribute name="clubName" optional="YES" attributeType="String"/>
+        <attribute name="geoCode" optional="YES" attributeType="String"/>
     </entity>
 </model>
