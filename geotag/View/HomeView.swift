@@ -94,7 +94,11 @@ struct HomeView: View {
                    // let lont = geoCode[1]
                // }
                 Map(coordinateRegion: $coordinateRegion, annotationItems: annotationItems) { item in
-                    MapPin(coordinate: item.coordinate)
+                  //  MapPin(coordinate: item.coordinate)
+                    MapAnnotation(coordinate: item.coordinate) {
+                        PinView()
+                    }
+                    
                 }
 
             }

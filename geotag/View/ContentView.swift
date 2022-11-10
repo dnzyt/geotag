@@ -51,6 +51,9 @@ struct ContentView: View {
                     loginVM.login { success in
                         print("login result: \(success)")
                         authentication.updateValidation(success: success)
+                        loginVM.saveQA { json in
+                           // print("\(json)")
+                        }
                     }
                 } label: {
                     Text("Login")
