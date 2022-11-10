@@ -23,7 +23,6 @@
 		6AB8B24E291893CF00F6C1E3 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8B24D291893CF00F6C1E3 /* LoginVM.swift */; };
 		6AB8B2502918975000F6C1E3 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8B24F2918975000F6C1E3 /* Authentication.swift */; };
 		6AD4E8F7291C14F9004CB5DF /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD4E8F6291C14F9004CB5DF /* PinView.swift */; };
-		6AD4E8F9291D4635004CB5DF /* QAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD4E8F8291D4635004CB5DF /* QAService.swift */; };
 		6AFAD69C291950B800678966 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD69B291950B800678966 /* HomeView.swift */; };
 		6AFAD6A22919A74300678966 /* HomeViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD6A12919A74300678966 /* HomeViewVM.swift */; };
 /* End PBXBuildFile section */
@@ -45,7 +44,6 @@
 		6AB8B24D291893CF00F6C1E3 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		6AB8B24F2918975000F6C1E3 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		6AD4E8F6291C14F9004CB5DF /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
-		6AD4E8F8291D4635004CB5DF /* QAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QAService.swift; sourceTree = "<group>"; };
 		6AFAD69B291950B800678966 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6AFAD6A12919A74300678966 /* HomeViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,7 +115,6 @@
 			children = (
 				6AB8B247291892E900F6C1E3 /* LoginService.swift */,
 				6AA17427291A6F7B00452050 /* HomeService.swift */,
-				6AD4E8F8291D4635004CB5DF /* QAService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -237,7 +234,6 @@
 				6A36F1002917F793004D0C1B /* ContentView.swift in Sources */,
 				6AB8B248291892E900F6C1E3 /* LoginService.swift in Sources */,
 				6A36F10A2917F793004D0C1B /* geotag.xcdatamodeld in Sources */,
-				6AD4E8F9291D4635004CB5DF /* QAService.swift in Sources */,
 				6A0636842919AA810003BA34 /* Constants.swift in Sources */,
 				6A0636812919A72D0003BA34 /* UIScreen+Extension.swift in Sources */,
 				6AB8B24B2918933400F6C1E3 /* UIApplication+Extension.swift in Sources */,

@@ -27,38 +27,59 @@ class LoginVM: ObservableObject {
     }
     
     func login(completion: @escaping (Bool) -> Void) {
-        LoginService.shared.login(
-            username: username,
-            password: password) { result in
-                DispatchQueue.main.async {
-                    completion(result)
+        LoginService.shared.login(username: username, password: password) { [unowned self] result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+            if result {
+                let qa = UserDefaults.standard.bool(forKey: "QA_DOWNLOADED")
+                if !qa {
+                    saveQA()
                 }
+                
+            }
         }
     }
     
-    func saveQA(completion: @escaping (JSON?) -> Void) {
-        QAService.shared.fetchQA(username: username, password: password) { json in
+    private func saveQA() {
+        LoginService.shared.fetchQA { json in
             guard let json = json else { return }
             let errorMessage =  json["ErrorMessage"].stringValue
             if errorMessage == "SUCCESS" {
                 self.context.perform {
+                    let questionsToHide = ["WEIGHT_LOSS_CHALLENGE_TYPE", "DAILY_CONSUMPTION_SERVE", "HEALTHY_ACTIVELF_FACILITY", "LOYALTY_PROGRAM_DTLS", "INTERNSHIP_PROGRAM_DTLS"]
                     let labels = json["Labels"].arrayValue
+                    var index = 0
                     for label in labels {
-                        let infos = label["Items"].arrayValue
-                        
-                        for info in infos {
-                            let labelKey = info["ItemKey"].stringValue
-                            let labelValue = info["ItemValue"].stringValue
-                            let comment = info["NeedComment"].stringValue
-                            
-                            let labelInfo = LabelInfo(entity: LabelInfo.entity(), insertInto: self.context)
-                            labelInfo.labelKey = labelKey
-                            labelInfo.labelValue = labelValue
-                            labelInfo.needComment = comment
+                        let question = QuestionInfo(context: self.context)
+                        question.categoryId = label["CategoryId"].stringValue
+                        question.orderIndex = Int16(index)
+                        index += 1
+                        question.label = label["Label"].stringValue
+                        question.questionKey = label["QuestionKey"].stringValue
+                        question.questionType = label["QuestionType"].stringValue
+                        question.needComment = "Y"
+                        if questionsToHide.contains(question.questionKey!) {
+                            question.toShow = false
+                        }
+                        if let items = label["Items"].array {
+                            for info in items {
+                                let labelKey = info["ItemKey"].stringValue
+                                let labelValue = info["ItemValue"].stringValue
+                                let comment = info["NeedComment"].stringValue
+                                
+                                let labelInfo = LabelInfo(context: self.context)
+                                labelInfo.labelKey = labelKey
+                                labelInfo.labelValue = labelValue
+                                labelInfo.needComment = comment
+                                
+                                labelInfo.question = question
+                            }
                         }
                     }
                     do {
                         try self.context.save()
+                        UserDefaults.standard.set(true, forKey: "QA_DOWNLOADED")
                         print("save successfully!")
                     } catch {
                         print("save error")
@@ -71,36 +92,3 @@ class LoginVM: ObservableObject {
     
     
 }
-
-/*
- vm.searchInfo { json in
-     guard let json = json else { return }
-     let errorMessage =  json["ErrorMessage"].stringValue
-     if errorMessage == "SUCCESS" {
-         let cbs = json["GetClubDetails"].arrayValue
-         for cb in cbs {
-             let ck = cb["ClubKey"].stringValue
-             let name = cb["ClubName"].stringValue
-             let address = cb["Address"].stringValue
-             let geoCode = cb["GeoCode"].stringValue
-             
-             viewContext.perform {
-                 let c = Club(entity: Club.entity(), insertInto: viewContext)
-                 c.clubName = name
-                 c.clubKey = ck
-                 c.addresss = address
-                 c.geoCode = geoCode
-                 clubs.append(c)
-                 
-                 do {
-                     try viewContext.save()
-                     print("save successfully!")
-                 } catch {
-                     print("save error")
-                 }
-                 
-             }
-         }
-     }
- }
- */

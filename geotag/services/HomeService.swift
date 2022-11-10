@@ -17,7 +17,7 @@ class HomeService {
         var dict = [String: String]()
         dict["Distributorld"] = ""
         dict["ClubKey"] = "1090134"
-        guard let url = URL(string: "https://herbalife-oegdevws.hrbl.com/Distributor/NClubGeoTrackRS_prs/NClubGetClubDetails") else { return }
+        guard let url = URL(string: Constants.url + Constants.getClubs) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -26,9 +26,7 @@ class HomeService {
         request.httpBody = httpBody
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let _ = error {
-                return
-            }
+            if let _ = error { return }
             
             let json = try! JSON(data: data!)
             if let _ = json["errorMessage"].string {
