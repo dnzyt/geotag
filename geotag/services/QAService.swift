@@ -16,25 +16,23 @@ class QAService {
     ) {
         var dict = [String: String]()
         dict["CountryCode"] = "ID"
-        guard let url = URL(string: "https://herbalife-oegdevws.hrbl.com/Distributor/NClubGeoTrackRS_prs/NClubGetLabelDetails") else { return }
+        guard let url = URL(string: Constants.url + Constants.getLabels) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Basic TkNHZW9UcmFja1Rlc3Q6TkNHMFRyQGNrVGVzdCFuZw==", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(Constants.token.toBase64())", forHTTPHeaderField: "Authorization")
         guard let httpBody = try? JSONSerialization.data(withJSONObject: dict, options: []) else { return }
         request.httpBody = httpBody
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let _ = error {
-                // error happens
-                
                 return
             }
             
             let json = try! JSON(data: data!)
             print("json: \(json)")
             if let _ = json["errorMessage"].string {
-                completion(json)
+                completion(nil)
             } else {
                 completion(json)
             }
