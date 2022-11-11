@@ -22,20 +22,27 @@ struct HomeView: View {
     @State private var showingPopover: Bool = false
     @ObservedObject var vm = HomeViewVM()
     @State var clubs: [Club] = []
-    @State var coordinateRegion: MKCoordinateRegion = {
-        var newRegion = MKCoordinateRegion()
-        newRegion.center.latitude = -6.270598386958833
-        newRegion.center.longitude = 106.53145176654043
-        newRegion.span.latitudeDelta = 0.1
-        newRegion.span.longitudeDelta = 0.1
-        return newRegion
-    }()
+    @State var showSheetView: Bool = false
+//    @State var coordinateRegion: MKCoordinateRegion = {
+//        var newRegion = MKCoordinateRegion()
+//        newRegion.center.latitude = -6.270598386958833
+//        newRegion.center.longitude = 106.53145176654043
+//        newRegion.span.latitudeDelta = 0.1
+//        newRegion.span.longitudeDelta = 0.1
+//        return newRegion
+//    }()
+    
+    @StateObject var locationManager = LocationManager()
+     
     
     @State var annotationItems: [MyAnnotationItem] = [
        // MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: 37.78, longitude: -122.44)),
       //  MyAnnotationItem(coordinate: CLLocationCoordinate2D(latitude: -6.270598386958833, longitude: 106.53145176654043))
                 
     ]
+    @State var clubIndex: Int = 0
+    
+   
     
     
     
@@ -82,10 +89,19 @@ struct HomeView: View {
                         }
                     }
                 }
+                .onTapGesture {
+                    showSheetView.toggle()
+                    let tapIndex = clubs.firstIndex(of: club)
+                    clubIndex = tapIndex ?? 0
+                }
                
-                
-                
+            
             }
+            .sheet(isPresented: $showSheetView) {
+                infoSheetView(clubIndex: $clubIndex, clubs: $clubs)
+                    .environmentObject(locationManager)
+            }
+                        
             
                //Map(coordinateRegion: mapRegion)
              //   ForEach(clubs, id: \.self) { club in
@@ -93,14 +109,14 @@ struct HomeView: View {
                  //   let lat = geoCode[0]
                    // let lont = geoCode[1]
                // }
-                Map(coordinateRegion: $coordinateRegion, annotationItems: annotationItems) { item in
+                Map(coordinateRegion: $locationManager.region, showsUserLocation: true,  annotationItems: annotationItems) { item in
                   //  MapPin(coordinate: item.coordinate)
                     MapAnnotation(coordinate: item.coordinate) {
                         PinView()
                     }
                     
                 }
-
+                
             }
                 .navigationBarTitle("Nutrition club",displayMode: .inline)
                 .navigationBarItems(trailing:
