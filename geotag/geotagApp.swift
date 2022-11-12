@@ -12,6 +12,7 @@ struct geotagApp: App {
     let persistenceController = PersistenceController.shared
     
     @StateObject var authentication = Authentication()
+    @StateObject var homeVM = HomeViewVM()
 
     var body: some Scene {
         WindowGroup {
@@ -21,6 +22,7 @@ struct geotagApp: App {
                 // Login View
                 HomeView()
                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                   .environmentObject(homeVM)
               //  ContentView()
                 //   .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 //   .environmentObject(authentication)
