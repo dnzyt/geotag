@@ -12,7 +12,8 @@ import CoreLocationUI
 struct InfoSheetView: View {
 
     @EnvironmentObject var vm: HomeViewVM
-    @EnvironmentObject var locationManager: LocationManager
+    
+
     
     
     
@@ -40,16 +41,25 @@ struct InfoSheetView: View {
                     
                 }
                 .frame(width: 500,height: 300)
+//                Button(action: {
+//                    vm.updateCurrentClub()
+//                }, label: {
+//                    Text("Capture current location")
+//                    .frame(width: 300, height: 60)
+//                    .font(.system(size: 20))
+//                    .foregroundColor(.white)
+//                    .background(.blue)
+//                    .cornerRadius(5)
+//                })
                 LocationButton {
-                    locationManager.requestLocation()
-                    
-                    
+                    vm.updateCurrentClub()
                 }
                 .frame(width: 300, height: 60)
                 .font(.system(size: 20))
                 .foregroundColor(.white)
                 .background(.blue)
                 .cornerRadius(5)
+
                 .navigationBarTitle("Club Information",displayMode: .inline)
                 .navigationBarItems(leading:
                                         Button {

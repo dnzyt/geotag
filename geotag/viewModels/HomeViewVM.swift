@@ -16,6 +16,8 @@ class HomeViewVM: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var clubs: [Club] = []
     @Published var annotationItems: [ClubAnnotation] = []
     
+    @Published var currentGeo: String?
+    
     var selectedClub: Club?
     
     private let viewContext: NSManagedObjectContext
@@ -58,6 +60,28 @@ class HomeViewVM: NSObject, ObservableObject, CLLocationManagerDelegate {
             
         }
         
+    }
+        
+    func updateCurrentClub() {
+        
+        //use the last reported location
+        if let lastLocation = locationManager.location {
+            let geostring = String(lastLocation.coordinate.latitude) + "," + String(lastLocation.coordinate.longitude)
+            
+            selectedClub?.geoCode = geostring
+           
+            annotationItems.removeAll()
+            for club in clubs {
+                if let geoCode = club.geoCode {
+                    let arrayString = geoCode.components(separatedBy: ",")
+                    let lat = Double(arrayString[0]) ?? 0
+                    let lon = Double(arrayString[1]) ?? 0
+                    annotationItems.append(ClubAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat),longitude: CLLocationDegrees(lon))))
+                }
+            }
+            calculateRegion()
+            
+        }
     }
     
     private func calculateRegion() {
@@ -110,7 +134,7 @@ class HomeViewVM: NSObject, ObservableObject, CLLocationManagerDelegate {
                             c.clubName = name
                             c.clubKey = ck
                             c.addresss = address
-//                            c.geoCode = geoCode
+                           // c.geoCode = geoCode
                             c.geoCode = "37.3346,-122.0090"
                             self.clubs.append(c)
                             
@@ -149,6 +173,7 @@ class HomeViewVM: NSObject, ObservableObject, CLLocationManagerDelegate {
             lastSeenLocation = locations.first
             calculateRegion()
         }
+        
         
     }
 }

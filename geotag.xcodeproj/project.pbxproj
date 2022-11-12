@@ -24,7 +24,6 @@
 		6AB8B24E291893CF00F6C1E3 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8B24D291893CF00F6C1E3 /* LoginVM.swift */; };
 		6AB8B2502918975000F6C1E3 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8B24F2918975000F6C1E3 /* Authentication.swift */; };
 		6AD4E8F7291C14F9004CB5DF /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD4E8F6291C14F9004CB5DF /* PinView.swift */; };
-		6AD4E901291E8839004CB5DF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD4E900291E8839004CB5DF /* LocationManager.swift */; };
 		6AFAD69C291950B800678966 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD69B291950B800678966 /* HomeView.swift */; };
 		6AFAD6A22919A74300678966 /* HomeViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFAD6A12919A74300678966 /* HomeViewVM.swift */; };
 /* End PBXBuildFile section */
@@ -47,7 +46,6 @@
 		6AB8B24D291893CF00F6C1E3 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		6AB8B24F2918975000F6C1E3 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		6AD4E8F6291C14F9004CB5DF /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
-		6AD4E900291E8839004CB5DF /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		6AFAD69B291950B800678966 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		6AFAD6A12919A74300678966 /* HomeViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,7 +89,6 @@
 		6A36F0FC2917F792004D0C1B /* geotag */ = {
 			isa = PBXGroup;
 			children = (
-				6AD4E8FF291E8819004CB5DF /* Manager */,
 				6A0636822919AA740003BA34 /* utils */,
 				6AFAD69D291950D500678966 /* View */,
 				6AB8B24C291893AF00F6C1E3 /* viewModels */,
@@ -141,14 +138,6 @@
 				6AFAD6A12919A74300678966 /* HomeViewVM.swift */,
 			);
 			path = viewModels;
-			sourceTree = "<group>";
-		};
-		6AD4E8FF291E8819004CB5DF /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				6AD4E900291E8839004CB5DF /* LocationManager.swift */,
-			);
-			path = Manager;
 			sourceTree = "<group>";
 		};
 		6AFAD69D291950D500678966 /* View */ = {
@@ -240,7 +229,6 @@
 			files = (
 				6A114E25291D8FAC00EE1E4D /* String+Extension.swift in Sources */,
 				6AA17428291A6F7B00452050 /* HomeService.swift in Sources */,
-				6AD4E901291E8839004CB5DF /* LocationManager.swift in Sources */,
 				6AFAD69C291950B800678966 /* HomeView.swift in Sources */,
 				6AD4E8F7291C14F9004CB5DF /* PinView.swift in Sources */,
 				6AB8B24E291893CF00F6C1E3 /* LoginVM.swift in Sources */,

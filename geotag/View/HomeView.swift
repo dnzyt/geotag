@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 import MapKit
 
+
 struct ClubAnnotation: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
@@ -20,7 +21,6 @@ struct HomeView: View {
     @State private var showingPopover: Bool = false
     @EnvironmentObject var vm: HomeViewVM
     @State var showSheetView: Bool = false
-
     
     @Environment(\.managedObjectContext) var viewContext
     
@@ -75,7 +75,11 @@ struct HomeView: View {
                 }
                 .sheet(isPresented: $showSheetView) {
                     InfoSheetView()
+                        
+
+
                 }
+                
                 Map(coordinateRegion: $vm.region, showsUserLocation: true, annotationItems: vm.annotationItems) { item in
                     MapAnnotation(coordinate: item.coordinate) {
                         PinView()
