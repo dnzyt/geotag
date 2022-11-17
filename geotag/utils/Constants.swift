@@ -15,3 +15,5 @@ struct Constants {
     static let getClubs = "/NClubGetClubDetails"
     static let createVisit = "/NClubCreateVisitDetails"
 }
+
+//https://herbalife-oegdevws.hrbl.com/Distributor/NClubGeoTrackRS_prs/NClubGetLabelDetails

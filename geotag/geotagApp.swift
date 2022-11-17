@@ -13,20 +13,24 @@ struct geotagApp: App {
     
     @StateObject var authentication = Authentication()
     @StateObject var homeVM = HomeViewVM()
+   // @StateObject var sideBarVM = SideBarVM()
 
     var body: some Scene {
         WindowGroup {
             if authentication.isValidated {
                 // HomeView
             } else {
-                // Login View
+     //            Login View
                 HomeView()
-                   .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                   .environmentObject(homeVM)
-              //  ContentView()
-                //   .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                //   .environmentObject(authentication)
+                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                  .environmentObject(homeVM)
+//               ContentView()
+//                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//                   .environmentObject(authentication)
                // infoSheetView()
+//               SideBarView()
+//                   .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//                   .environmentObject(sideBarVM)
             }
         }
     }

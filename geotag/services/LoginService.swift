@@ -40,6 +40,7 @@ class LoginService {
         var dict = [String: String]()
         dict["CountryCode"] = "ID"
         guard let url = URL(string: Constants.url + Constants.getLabels) else { return }
+        print("\(url)")
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

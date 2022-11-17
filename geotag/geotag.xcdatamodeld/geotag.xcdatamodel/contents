@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AnswerInfo" representedClassName="AnswerInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryId" optional="YES" attributeType="String"/>
+        <attribute name="clubKey" optional="YES" attributeType="String"/>
+        <attribute name="questionKey" optional="YES" attributeType="String"/>
+        <attribute name="questionLabel" optional="YES" attributeType="String"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="AnswerItem" inverseName="answerInfo" inverseEntity="AnswerItem"/>
+    </entity>
+    <entity name="AnswerItem" representedClassName="AnswerItem" syncable="YES" codeGenerationType="class">
+        <attribute name="ifSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="itemKey" optional="YES" attributeType="String"/>
+        <attribute name="itemValue" optional="YES" attributeType="String"/>
+        <attribute name="needComment" optional="YES" attributeType="String"/>
+        <relationship name="answerInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnswerInfo" inverseName="items" inverseEntity="AnswerInfo"/>
+    </entity>
     <entity name="Club" representedClassName="Club" syncable="YES" codeGenerationType="class">
         <attribute name="addresss" optional="YES" attributeType="String"/>
         <attribute name="clubKey" optional="YES" attributeType="String"/>
@@ -21,6 +35,6 @@
         <attribute name="questionKey" optional="YES" attributeType="String"/>
         <attribute name="questionType" optional="YES" attributeType="String"/>
         <attribute name="toShow" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="items" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LabelInfo" inverseName="question" inverseEntity="LabelInfo"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LabelInfo" inverseName="question" inverseEntity="LabelInfo"/>
     </entity>
 </model>

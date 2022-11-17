@@ -21,6 +21,7 @@ struct HomeView: View {
     @State private var showingPopover: Bool = false
     @EnvironmentObject var vm: HomeViewVM
     @State var showSheetView: Bool = false
+    @State var showSideBarView: Bool = false
     
     @Environment(\.managedObjectContext) var viewContext
     
@@ -67,18 +68,31 @@ struct HomeView: View {
                     .onTapGesture {
                         showSheetView.toggle()
                         vm.selectedClub = club
+                        
 //                        let tapIndex = vm.clubs.firstIndex(of: club)
 //                        clubIndex = tapIndex ?? 0
                     }
                
             
                 }
-                .sheet(isPresented: $showSheetView) {
-                    InfoSheetView()
-                        
+                
+                    .sheet(isPresented: $showSheetView) {
+                        InfoSheetView(showSideBar: $showSideBarView)
+                            
 
 
-                }
+                    }
+
+                
+                    .background(
+                        NavigationLink("",
+                                       destination: SideBarView().environmentObject(SideBarVM(c: vm.selectedClub)),
+                                       isActive: $showSideBarView)
+                    )
+                    
+                
+                
+                
                 
                 Map(coordinateRegion: $vm.region, showsUserLocation: true, annotationItems: vm.annotationItems) { item in
                     MapAnnotation(coordinate: item.coordinate) {

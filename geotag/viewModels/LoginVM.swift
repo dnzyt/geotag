@@ -63,6 +63,7 @@ class LoginVM: ObservableObject {
                             question.toShow = false
                         }
                         if let items = label["Items"].array {
+                            var itemIndex = 0
                             for info in items {
                                 let labelKey = info["ItemKey"].stringValue
                                 let labelValue = info["ItemValue"].stringValue
@@ -73,7 +74,11 @@ class LoginVM: ObservableObject {
                                 labelInfo.labelValue = labelValue
                                 labelInfo.needComment = comment
                                 
-                                labelInfo.question = question
+                                question.insertIntoItems(labelInfo, at: itemIndex)
+                                itemIndex += 1
+//                                labelInfo.question = question
+                                
+                               // print("\(question)")
                             }
                         }
                     }

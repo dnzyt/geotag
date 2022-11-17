@@ -61,7 +61,7 @@ class HomeViewVM: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
     }
-        
+    
     func updateCurrentClub() {
         
         //use the last reported location
