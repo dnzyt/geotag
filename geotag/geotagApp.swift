@@ -18,15 +18,18 @@ struct geotagApp: App {
     var body: some Scene {
         WindowGroup {
             if authentication.isValidated {
-                // HomeView
-            } else {
-     //            Login View
                 HomeView()
                  .environment(\.managedObjectContext, persistenceController.container.viewContext)
                   .environmentObject(homeVM)
-//               ContentView()
+                // HomeView
+            } else {
+     //            Login View
+//                HomeView()
 //                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//                   .environmentObject(authentication)
+//                  .environmentObject(homeVM)
+               ContentView()
+                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                   .environmentObject(authentication)
                // infoSheetView()
 //               SideBarView()
 //                   .environment(\.managedObjectContext, persistenceController.container.viewContext)
