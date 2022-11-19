@@ -14,6 +14,7 @@ struct BusinessView: View {
     @EnvironmentObject var vm: SideBarVM
     
     var body: some View {
+     
         List(infos.filter({ $0.categoryId == "\(5)" })) { info in
             VStack {
                 HStack() {
@@ -24,7 +25,6 @@ struct BusinessView: View {
                         .foregroundColor(.white)
                       //  .underline()
                     
-                    
                 }
                 .frame(width: 700, height: 60)
                 .background(.green)
@@ -32,15 +32,30 @@ struct BusinessView: View {
                 .padding(5)
                 
                 ForEach(info.items!.array as! [AnswerItem]) { choice in
-                        if choice.ifSelected {
+                    if choice.ifSelected && choice.needComment == "N" {
                             Text(choice.itemValue ?? "")
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .multilineTextAlignment(.center)
                                 .font(Font.system(size: 15))
+                    
                                
                         }
-                     
+                    else if choice.ifSelected && choice.needComment == "Y" {
+                        HStack {
+                            Text(choice.itemValue ?? "")
+                            Text(choice.comment ?? "")
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .multilineTextAlignment(.center)
+                        .font(Font.system(size: 15))
+                            
+
+                        
+                    }
                     
+                    
+                    
+                     
                 }
 
                 
@@ -55,15 +70,18 @@ struct BusinessView: View {
                 
             }
             
+
+            
         }
-        
         .sheet(isPresented: $showQuestionSheetView) {
             QuestionSheet()
                 
 
 
         }
+
     }
 }
+
 
 

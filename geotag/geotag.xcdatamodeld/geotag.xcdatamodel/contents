@@ -8,6 +8,7 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="AnswerItem" inverseName="answerInfo" inverseEntity="AnswerItem"/>
     </entity>
     <entity name="AnswerItem" representedClassName="AnswerItem" syncable="YES" codeGenerationType="class">
+        <attribute name="comment" optional="YES" attributeType="String"/>
         <attribute name="ifSelected" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="itemKey" optional="YES" attributeType="String"/>
         <attribute name="itemValue" optional="YES" attributeType="String"/>

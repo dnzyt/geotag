@@ -12,6 +12,7 @@ struct QuestionSheet: View {
     @EnvironmentObject var vm: SideBarVM
     @State var text: String = ""
     @State var selection = Set<AnswerItem>()
+    @State var otherText: String = ""
 
     var body: some View {
         NavigationView {
@@ -22,32 +23,31 @@ struct QuestionSheet: View {
                         .padding(.bottom, 15)
                     
                     List(vm.answer?.items?.array as! [AnswerItem], id: \.self, selection: $selection) { ansItem in
-                        Text(ansItem.itemValue!)
+                        if ansItem.needComment == "N" {
+                            Text(ansItem.itemValue!)
+                                .font(Font.system(size: 20))
+                                .padding(5)
+                        }
+                        else if ansItem.needComment == "Y" {
+                            HStack {
+                                Text(ansItem.itemValue!)
+                                TextField("leave comment...", text: $otherText)
+                                    .padding(.leading, 5)
+                            }
                             .font(Font.system(size: 20))
-                            .padding(5)
+                             .padding(5)
+                           
+                        }
+                        
 
                     }
                     .frame(width: 600, height: 400)
                     .border(.green)
+                    
                     .toolbar {
                         EditButton()
                     }
-                    
-//                    VStack (alignment: .leading) {
-//
-//                        ForEach(items) { item in
-//                            Text(item.labelValue!)
-//                                .font(Font.system(size: 20))
-//                                .padding(5)
-//
-//
-//
-//
-//                        }
-//                    }
-//                    .frame(width: 400)
-//                    .border(.green)
-//                    .padding(.leading, 120)
+                
                     TextField("leave comment...", text: $text)
                         .multilineTextAlignment(.leading)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -59,7 +59,9 @@ struct QuestionSheet: View {
                         Button {
                             for i in selection {
                                 i.ifSelected = true
+                                i.comment = otherText
                             }
+                            
                             
                         } label: {
                             Image(systemName: "checkmark.circle")
