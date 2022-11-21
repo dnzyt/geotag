@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AnswerInfo" representedClassName="AnswerInfo" syncable="YES" codeGenerationType="class">
         <attribute name="categoryId" optional="YES" attributeType="String"/>
         <attribute name="clubKey" optional="YES" attributeType="String"/>
@@ -20,6 +20,7 @@
         <attribute name="clubKey" optional="YES" attributeType="String"/>
         <attribute name="clubName" optional="YES" attributeType="String"/>
         <attribute name="geoCode" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="LabelInfo" representedClassName="LabelInfo" syncable="YES" codeGenerationType="class">
         <attribute name="labelKey" optional="YES" attributeType="String"/>

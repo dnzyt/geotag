@@ -18,6 +18,10 @@ struct ClubAnnotation: Identifiable {
 
 
 struct HomeView: View {
+    
+    @FetchRequest var clubs: FetchedResults<Club>
+    @State var selectedClub: Club?
+    
     @State private var showingPopover: Bool = false
     @EnvironmentObject var vm: HomeViewVM
     @State var showSheetView: Bool = false
@@ -25,75 +29,61 @@ struct HomeView: View {
     
     @Environment(\.managedObjectContext) var viewContext
     
+    init() {
+        _clubs = FetchRequest(fetchRequest: Club.fetchRequest())
+    }
+    
 
     var body: some View {
        
         NavigationView {
             VStack {
-                List(vm.clubs) { club in
-                    HStack {
-                        VStack {
-                            Image(systemName: "key")
-                                .padding(.top, 10)
+                List {
+                    ForEach(clubs, id: \.id) { club in
+                        HStack {
+                            VStack {
+                                Image(systemName: "key")
+                                    .padding(.top, 10)
+                                Spacer()
+                                Image(systemName: "house")
+                                    .padding(.bottom,30)
+                            }
+                            VStack {
+                                Text("Club key")
+                                    .frame(width: 250, alignment: .leading)
+                                Text(club.clubKey!)
+                                    .frame(width: 250, alignment: .leading)
+                                    .foregroundColor(.green)
+                                Text("Address")
+                                    .frame(width: 250, alignment: .leading)
+                                Text(club.addresss!)
+                                    .frame(width: 250)
+                                    .foregroundColor(.green)
+                            }
                             Spacer()
-                            Image(systemName: "house")
-                                .padding(.bottom,30)
-                        }
-                        VStack {
-                            Text("Club key")
-                                .frame(width: 250, alignment: .leading)
-                            Text(club.clubKey!)
-                                .frame(width: 250, alignment: .leading)
-                                .foregroundColor(.green)
-                            Text("Address")
-                                .frame(width: 250, alignment: .leading)
-                            Text(club.addresss!)
-                                .frame(width: 250)
-                                .foregroundColor(.green)
-                        }
-                        Spacer()
-                        VStack {
-                            Text("Club name")
-                            Text(club.clubName!)
-                                .foregroundColor(.green)
-                            Spacer()
-                            HStack {
-                                Image(systemName: "mappin.and.ellipse")
-                                Image(systemName: "map.circle")
-                                    .frame(width: 20, alignment: .trailing)
+                            VStack {
+                                Text("Club name")
+                                Text(club.clubName!)
+                                    .foregroundColor(.green)
+                                Spacer()
+                                HStack {
+                                    Image(systemName: "mappin.and.ellipse")
+                                    Image(systemName: "map.circle")
+                                        .frame(width: 20, alignment: .trailing)
 
+                                }
                             }
                         }
                     }
-                    .onTapGesture {
-                        showSheetView.toggle()
-                        vm.selectedClub = club
-                        
-//                        let tapIndex = vm.clubs.firstIndex(of: club)
-//                        clubIndex = tapIndex ?? 0
-                    }
-               
-            
                 }
-                
-                    .sheet(isPresented: $showSheetView) {
-                        InfoSheetView(showSideBar: $showSideBarView)
-                            
-
-
-                    }
-
-                
-                    .background(
-                        NavigationLink("",
-                                       destination: SideBarView().environmentObject(SideBarVM(c: vm.selectedClub)),
-                                       isActive: $showSideBarView)
-                    )
-                    
-                
-                
-                
-                
+                .sheet(item: $selectedClub) { club in
+                    InfoSheetView(club: club)
+                }
+                .background(
+                    NavigationLink("",
+                                   destination: SideBarView().environmentObject(SideBarVM(c: vm.selectedClub)),
+                                   isActive: $showSideBarView))
+ 
                 Map(coordinateRegion: $vm.region, showsUserLocation: true, annotationItems: vm.annotationItems) { item in
                     MapAnnotation(coordinate: item.coordinate) {
                         PinView()

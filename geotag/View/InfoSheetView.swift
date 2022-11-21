@@ -11,17 +11,15 @@ import CoreLocationUI
 
 struct InfoSheetView: View {
 
+    @ObservedObject var club: Club
     @EnvironmentObject var vm: HomeViewVM
     @Environment(\.presentationMode) var presentationMode
-   // @EnvironmentObject var sideBarVM: SideBarVM
-   // @State var showSideBar: Bool = false
-    
-   // @StateObject var sideBarVM = SideBarVM()
     let persistenceController = PersistenceController.shared
-    @Binding var showSideBar: Bool
     
 
-    
+    init(club: Club) {
+        _club = ObservedObject(wrappedValue: club)
+    }
     
     
     var body: some View {
@@ -82,13 +80,6 @@ struct InfoSheetView: View {
                         trailing:
                             Button {
                                 self.presentationMode.wrappedValue.dismiss()
-                                self.showSideBar = true
-//                                SideBarView()
-//                                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//                                .environmentObject(sideBarVM)
-                                
-                                
-                                
                             } label: {
                                 Image(systemName: "square.and.arrow.up.on.square.fill")
                             }
